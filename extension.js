@@ -52,8 +52,8 @@ function init()
                           x_fill: true,
                           y_fill: false,
                           track_hover: true });
-    let icon = new St.Icon({ icon_name: 
-                             'view-refresh',
+    let icon = new St.Icon({ 
+                             icon_name: 'preferences-desktop-wallpaper',
                              icon_type: St.IconType.SYMBOLIC,
                              style_class: 'system-status-icon' });
 
