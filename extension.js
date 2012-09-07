@@ -53,14 +53,21 @@ WallpaperChanger.prototype = {
     _init: function() {
         PanelMenu.SystemStatusButton.prototype._init.call(this, 'preferences-desktop-wallpaper');
 
-        this.change = new PopupMenuItem(_('Change wallpaper'),
+        this.menuItemChangeWallpaper = new PopupMenuItem(_('Change wallpaper'),
                                            'view-refresh',
-                                           Lang.bind(this, this._onChange));
-        this.menu.addMenuItem(this.change);
+                                           Lang.bind(this, this._changeWallpaper));
+        this.menu.addMenuItem(this.menuItemChangeWallpaper);
+        
+
+        this.menuItemPreferences = new PopupMenuItem(_('Preferences'),
+                                           'preferences-system',
+                                           Lang.bind(this, this._preferences));
+        this.menu.addMenuItem(this.menuItemPreferences);
 
     },
 
-    _onChange: function() {
+    _changeWallpaper: function() 
+    {
         // Change background
         let settings = new Gio.Settings({ schema: "org.gnome.desktop.background" });    
 
@@ -85,7 +92,11 @@ WallpaperChanger.prototype = {
 
         return true;
     },
-
+    
+    _preferences: function() 
+    {
+        
+    }
 };
 
 function init() 
@@ -97,8 +108,8 @@ function enable()
 {
     let _indicator = new WallpaperChanger;
     Main.panel.addToStatusArea('wallpaper_changer', _indicator);
-    _timer = MainLoop.timeout_add(3600000, Lang.bind(_indicator, _indicator._onChange));
-    _indicator._onChange();
+    _timer = MainLoop.timeout_add(3600000, Lang.bind(_indicator, _indicator._changeWallpaper));
+    _indicator._changeWallpaper();
 }
 
 function disable() 
